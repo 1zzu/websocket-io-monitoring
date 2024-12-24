@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: socket-app-cubiehome-net-tls
+  namespace: development
+spec:
+  secretName: socket-app-cubiehome-net-tls # Name of the secret where the cert will be stored
+  duration: 2160h # 90 days
+  renewBefore: 48h # 15 days before expiration
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: socket.app.cubiehome.net
+  dnsNames:
+  - socket.app.cubiehome.net

@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socket
+  namespace: development
+  labels:
+    app.kubernetes.io/ci-job-id: "JOB_ID"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: socket
+  template:
+    metadata:
+      labels:
+        app: socket
+        job: "JOB_ID"
+    spec:
+      imagePullSecrets:
+      - name: private-registry
+      containers:
+      - name: socket
+        image: git.gonethome.id:5050/ahmad/socket:BRANCH
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
